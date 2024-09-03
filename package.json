@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Node.js wrapper for mkspiffs.",
   "main": "lib/mkspiffs.js",
-  "private": "true",
   "files": [
     "lib/",
     "bin/",
