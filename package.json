@@ -1,5 +1,5 @@
 {
-  "name": "@prolifode/mkspiffs-wrapper",
+  "name": "mkspiffs-wrapper",
   "version": "1.0.0",
   "description": "Node.js wrapper for mkspiffs.",
   "main": "dist/index.js",
