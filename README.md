@@ -1,6 +1,6 @@
 # mkspiffs-wrapper
 
-This is a Node.js wrapper for `mkspiffs.exe`, allowing you to execute mkspiffs commands directly from your Node.js applications.
+This is a Node.js wrapper for `mkspiffs`, allowing you to execute mkspiffs commands directly from your Node.js applications.
 
 ## Installation
 
