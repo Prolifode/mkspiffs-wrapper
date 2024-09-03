@@ -1,14 +1,28 @@
 {
-  "name": "mkspiffs-wrapper",
-  "version": "1.0.3",
+  "name": "@prolifode/mkspiffs-wrapper",
+  "version": "1.0.0",
   "description": "Node.js wrapper for mkspiffs.",
-  "main": "lib/mkspiffs.js",
-  "types": "types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prolifode/mkspiffs-wrapper.git"
+  },
   "files": [
     "lib/",
+    "dist/",
     "bin/",
-    "examples/",
-    "scripts/"
+    "src/",
+    "examples/"
   ],
   "keywords": [
     "mkspiffs",

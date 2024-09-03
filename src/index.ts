@@ -1,8 +1,16 @@
-const { exec } = require('child_process');
-const path = require('path');
-const os = require('os');
+import { exec } from 'child_process';
+import * as path from 'path';
+import * as os from 'os';
+
+interface PackOptions {
+    blockSize?: number;
+    pageSize?: number;
+    spiffSize?: number;
+}
 
 class Mkspiffs {
+    private mkspiffPath: string;
+
     constructor() {
         this.mkspiffPath = this.getMkspiffPath();
     }
@@ -11,7 +19,7 @@ class Mkspiffs {
      * Determines the path to the appropriate mkspiffs binary based on the platform.
      * @returns {string} The full path to the mkspiffs executable.
      */
-    getMkspiffPath() {
+    private getMkspiffPath(): string {
         const platform = os.platform();
         const arch = os.arch();
 
@@ -41,9 +49,9 @@ class Mkspiffs {
     /**
      * Executes a command using mkspiffs.
      * @param {string[]} args - The arguments to pass to the command.
-     * @param {function} callback - Callback function to handle the command output.
+     * @param {(error: Error | null, stdout: string | null) => void} callback - Callback function to handle the command output.
      */
-    execute(args = [], callback) {
+    private execute(args: string[], callback: (error: Error | null, stdout: string | null) => void): void {
         const fullCommand = `"${this.mkspiffPath}" ${args.join(' ')}`;
         exec(fullCommand, (error, stdout, stderr) => {
             if (error) {
@@ -64,15 +72,15 @@ class Mkspiffs {
      * Packs a directory into a spiff file with custom options.
      * @param {string} sourceDir - The directory to pack.
      * @param {string} outputFile - The output .spiff file.
-     * @param {object} options - Custom options for block size, page size, and spiff size.
-     * @param {function} callback - Callback function to handle the command output.
+     * @param {PackOptions} [options={}] - Custom options for block size, page size, and spiff size.
+     * @param {(error: Error | null, stdout: string | null) => void} callback - Callback function to handle the command output.
      */
-    pack(sourceDir, outputFile, options = {}, callback) {
-        const args = ['-c', sourceDir];
+    pack(sourceDir: string, outputFile: string, options: PackOptions = {}, callback: (error: Error | null, stdout: string | null) => void): void {
+        const args: string[] = ['-c', sourceDir];
 
-        if (options.blockSize) args.push('-b', options.blockSize);
-        if (options.pageSize) args.push('-p', options.pageSize);
-        if (options.spiffSize) args.push('-s', options.spiffSize);
+        if (options.blockSize) args.push('-b', options.blockSize.toString());
+        if (options.pageSize) args.push('-p', options.pageSize.toString());
+        if (options.spiffSize) args.push('-s', options.spiffSize.toString());
 
         args.push(outputFile);
 
@@ -83,13 +91,13 @@ class Mkspiffs {
      * Unpacks a spiffs file into a specified directory.
      * @param {string} spiffFile - The .spiff file to unpack.
      * @param {string} outputDir - The directory where files will be unpacked.
-     * @param {function} callback - Callback function to handle the command output.
+     * @param {(error: Error | null, stdout: string | null) => void} callback - Callback function to handle the command output.
      */
-    unpack(spiffFile, outputDir, callback) {
-        const args = ['-u', spiffFile, '-d', outputDir];
+    unpack(spiffFile: string, outputDir: string, callback: (error: Error | null, stdout: string | null) => void): void {
+        const args: string[] = ['-u', spiffFile, '-d', outputDir];
 
         this.execute(args, callback);
     }
 }
 
-module.exports = Mkspiffs;
+export default Mkspiffs;
