@@ -1,0 +1,28 @@
+{
+  "name": "mkspiffs-wrapper",
+  "version": "1.0.0",
+  "description": "Node.js wrapper for mkspiffs.",
+  "main": "lib/mkspiffs.js",
+  "files": [
+    "lib/",
+    "bin/",
+    "examples/",
+    "scripts/"
+  ],
+  "keywords": [
+    "mkspiffs",
+    "nodejs",
+    "wrapper",
+    "spiffs"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
