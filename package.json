@@ -1,8 +1,9 @@
 {
   "name": "mkspiffs-wrapper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node.js wrapper for mkspiffs.",
   "main": "lib/mkspiffs.js",
+  "types": "types/index.d.ts",
   "files": [
     "lib/",
     "bin/",
