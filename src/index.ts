@@ -36,6 +36,8 @@ class Mkspiffs {
                 binaryPath = path.join(__dirname, '..', 'bin', 'linux32', 'mkspiffs');
             } else if (arch === 'arm') {
                 binaryPath = path.join(__dirname, '..', 'bin', 'linux-armhf', 'mkspiffs');
+            } else if (arch === 'arm64') {
+                binaryPath = path.join(__dirname, '..', 'bin', 'generic', 'mkspiffs');
             }
         }
 
