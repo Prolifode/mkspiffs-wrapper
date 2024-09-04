@@ -26,10 +26,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const path = __importStar(require("path"));
 const os = __importStar(require("os"));
+const fs = __importStar(require("fs"));
 class Mkspiffs {
     mkspiffPath;
     constructor() {
         this.mkspiffPath = this.getMkspiffPath();
+        this.ensureExecutable(this.mkspiffPath);
+    }
+    /**
+     * Ensures that the specified file is executable.
+     * @param {string} filePath - The path to the file to check.
+     */
+    ensureExecutable(filePath) {
+        try {
+            // Check if the file exists
+            if (fs.existsSync(filePath)) {
+                // Check current permissions
+                const stat = fs.statSync(filePath);
+                const isExecutable = (stat.mode & fs.constants.X_OK) !== 0;
+                if (!isExecutable) {
+                    // Set the file as executable
+                    fs.chmodSync(filePath, 0o755);
+                    console.log(`Permissions updated for ${filePath}`);
+                }
+            }
+            else {
+                throw new Error(`File not found: ${filePath}`);
+            }
+        }
+        catch (err) {
+            console.error(`Error ensuring executable permissions:`, err);
+        }
     }
     /**
      * Determines the path to the appropriate mkspiffs binary based on the platform.

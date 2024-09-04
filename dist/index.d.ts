@@ -7,6 +7,11 @@ declare class Mkspiffs {
     private mkspiffPath;
     constructor();
     /**
+     * Ensures that the specified file is executable.
+     * @param {string} filePath - The path to the file to check.
+     */
+    private ensureExecutable;
+    /**
      * Determines the path to the appropriate mkspiffs binary based on the platform.
      * @returns {string} The full path to the mkspiffs executable.
      */

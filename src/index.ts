@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import * as path from 'path';
 import * as os from 'os';
+import * as fs from 'fs';
 
 interface PackOptions {
     blockSize?: number;
@@ -13,6 +14,32 @@ class Mkspiffs {
 
     constructor() {
         this.mkspiffPath = this.getMkspiffPath();
+        this.ensureExecutable(this.mkspiffPath);
+    }
+
+    /**
+     * Ensures that the specified file is executable.
+     * @param {string} filePath - The path to the file to check.
+     */
+    private ensureExecutable(filePath: string): void {
+        try {
+            // Check if the file exists
+            if (fs.existsSync(filePath)) {
+                // Check current permissions
+                const stat = fs.statSync(filePath);
+                const isExecutable = (stat.mode & fs.constants.X_OK) !== 0;
+
+                if (!isExecutable) {
+                    // Set the file as executable
+                    fs.chmodSync(filePath, 0o755);
+                    console.log(`Permissions updated for ${filePath}`);
+                }
+            } else {
+                throw new Error(`File not found: ${filePath}`);
+            }
+        } catch (err) {
+            console.error(`Error ensuring executable permissions:`, err);
+        }
     }
 
     /**
