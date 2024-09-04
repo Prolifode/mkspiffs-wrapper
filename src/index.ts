@@ -23,7 +23,7 @@ class Mkspiffs {
         const platform = os.platform();
         const arch = os.arch();
 
-        let binaryPath = '';
+        let binaryPath = path.join(__dirname, '..', 'bin', 'generic', 'mkspiffs');
 
         if (platform === 'win32') {
             binaryPath = path.join(__dirname, '..', 'bin', 'win32', 'mkspiffs.exe');
